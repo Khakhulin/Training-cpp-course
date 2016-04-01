@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS =  -O2 -std=c++11 -g -Wall  ##-Werror
+CFLAGS =  -O2 -std=c++11 -g -Wall  -Werror
 
 SOURCES = set.cpp $(EXECUTABLE).cpp
 OBJECTS = $(SOURCES:.cpp = .o)

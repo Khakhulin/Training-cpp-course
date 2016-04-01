@@ -29,11 +29,8 @@ public:
             m_size = s_x;
     }
     set(set&& r_other){
-        int s_x = r_other.size();
-        mem_arr = new int[s_x];
-        for(int i = 0; i < s_x; i++)
-            mem_arr[i] = r_other.mem_arr[i];
-        m_size = s_x;
+        m_size = r_other.m_size;
+        mem_arr = r_other.mem_arr;
         r_other.mem_arr = nullptr;
         r_other.m_size = 0;
     }
@@ -43,30 +40,23 @@ public:
     bool hasElement(int element) const;
     void insert(const int &element);
     void dump();
+    void swap(set& second){
+        std::swap(m_size, second.m_size);
+        std::swap(mem_arr, second.mem_arr);
+    }
     //operators
     friend set operator&(const set &A, const set &B); //intersection
     friend set operator+(const set &A, const set &B); //union
     friend set operator / (const set& A, const set& B);
     const set& operator=(const set& right){
-        if(this == &right){
-        return *this;
-        }
-        delete []mem_arr;
-        int s_x = right.size();
-        mem_arr = new int[s_x];
-        for(int i = 0; i < s_x; i++)
-            mem_arr[i] = right.mem_arr[i];
-        m_size = s_x;//right.m_size;
-
+        set tmp(right);
+        this->swap(tmp);
         return *this;
     }
     const set& operator=(set&& r_right){
         if(this != &r_right){
-            int s_x = r_right.size();
-            mem_arr = new int[s_x];
-            for(int i = 0; i < s_x; i++)
-                mem_arr[i] = r_right.mem_arr[i];
-            m_size = s_x;
+            mem_arr = r_right.mem_arr;
+            m_size = r_right.m_size;
             r_right.m_size = 0;
             r_right.mem_arr = nullptr;
         }

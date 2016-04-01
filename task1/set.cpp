@@ -11,18 +11,20 @@ bool set::hasElement(int element) const{
 void set::insert(const int &element){
     if(hasElement(element) == true)
         return;
-    const int size = set::size() + 1;
+    const int size = set::size() ;
     int* tmp = new int[size];
     for(int  i = 0; i < size; i++){
         tmp[i] = mem_arr[i];
     }
+
     delete []mem_arr;
-    mem_arr = new int[size];
-    for(int i = 0; i < set::size(); i++){
+    mem_arr = new int[size + 1];
+    for(int i = 0; i < size; i++){
         mem_arr[i] = tmp[i];
     }
     mem_arr[m_size] = element;
     m_size++;
+    delete []tmp;
     return;
 }
 void set::dump(){
@@ -32,7 +34,7 @@ void set::dump(){
 //**********Operators********//
 set operator&(const set& A, const set& B){
     set *tmp = new set;
-    for(int i = 0; i < std::max(A.size(), B.size()); i++){
+    for(int i = 0; i < A.size(); i++){
         if(B.hasElement(A.mem_arr[i]))
             tmp->insert(A.mem_arr[i]);
     }
@@ -40,23 +42,22 @@ set operator&(const set& A, const set& B){
 }
 set operator+(const set& A, const set& B){
     set *tmp = new set;
-    for(int i = 0;i < std::max(A.size(), B.size()); i++){
-        tmp->insert(A.mem_arr[i]);
-        tmp->insert(B.mem_arr[i]);
+    for(int i = 0; i < A.size(); i++){
+            tmp->insert(A.mem_arr[i]);
+    }
+    for(int i = 0; i < B.size(); i++){
+            tmp->insert(B.mem_arr[i]);
     }
     return *tmp;
 }
 
 set operator/(const set& A, const set& B){
     set *tmp = new set;
-    int j = 0;
     for(int i = 0;i < A.size(); i++){
         if(!B.hasElement(A.mem_arr[i])){
-            tmp->mem_arr[j] = A.mem_arr[i];
-            j +=1;
+            tmp->insert(A.mem_arr[i]);
         }
     }
-    tmp->m_size = j;
     return *tmp;
 }
 

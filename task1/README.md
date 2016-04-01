@@ -1,2 +1,2 @@
 # First task
-Create tou own data structure: set.
+Create you own data structure: set.

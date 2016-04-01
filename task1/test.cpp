@@ -5,19 +5,19 @@ set ret_Value(){
 }
 
 int main(){
-    set myset;
-    myset.insert(5);
-    myset.insert(3);
-    myset.dump();
     set A;
     set B,C;
-    std::string str;
-    std::cin >> A >> B >> C;
+    A.insert(1);
+    A.insert(2);
+    A.insert(3);
+    B.insert(4);
+    B.insert(5);
+    B.insert(6);
+    B.insert(7);
     set Set;
-    std::cout << "set A::\n" << A <<  "setB::\n";
+    std::cout << "set  A" << A <<  "setB::\n";
     std::cout << B << "setC::\n" << C << std::endl;
     Set = A + B;
-
     std::cout << Set << std::endl;
     //Set = B;
     return 0;
