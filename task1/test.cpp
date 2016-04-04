@@ -15,10 +15,14 @@ int main(){
     B.insert(6);
     B.insert(7);
     set Set;
-    std::cout << "set  A" << A <<  "setB::\n";
-    std::cout << B << "setC::\n" << C << std::endl;
     Set = A + B;
-    std::cout << Set << std::endl;
-    //Set = B;
+    std::cout << "A+B:: "<< Set << std::endl;
+
+    Set = A / B;
+    std::cout <<"A/B:: "<< Set << std::endl;
+
+    Set = A & B;
+    std::cout << "A & B:: "<<Set << std::endl;
+    
     return 0;
 }

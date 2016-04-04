@@ -19,7 +19,7 @@ public:
     //Constructors
     set(){
         m_size = 0;
-        mem_arr = new int[0];
+        mem_arr = 0;
     }
     set(const set& other){
             int s_x = other.size();
@@ -55,6 +55,7 @@ public:
     }
     const set& operator=(set&& r_right){
         if(this != &r_right){
+            delete []mem_arr;
             mem_arr = r_right.mem_arr;
             m_size = r_right.m_size;
             r_right.m_size = 0;

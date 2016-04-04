@@ -11,20 +11,14 @@ bool set::hasElement(int element) const{
 void set::insert(const int &element){
     if(hasElement(element) == true)
         return;
-    const int size = set::size() ;
-    int* tmp = new int[size];
-    for(int  i = 0; i < size; i++){
-        tmp[i] = mem_arr[i];
-    }
-
-    delete []mem_arr;
-    mem_arr = new int[size + 1];
-    for(int i = 0; i < size; i++){
+    m_size++;
+    int* tmp = mem_arr;
+    mem_arr = new int[m_size];
+    for(int  i = 0; i < m_size - 1; i++){
         mem_arr[i] = tmp[i];
     }
-    mem_arr[m_size] = element;
-    m_size++;
     delete []tmp;
+    mem_arr[m_size - 1] = element;
     return;
 }
 void set::dump(){
@@ -33,32 +27,32 @@ void set::dump(){
 }
 //**********Operators********//
 set operator&(const set& A, const set& B){
-    set *tmp = new set;
+    set tmp;
     for(int i = 0; i < A.size(); i++){
         if(B.hasElement(A.mem_arr[i]))
-            tmp->insert(A.mem_arr[i]);
+            tmp.insert(A.mem_arr[i]);
     }
-    return *tmp;
+    return tmp;
 }
 set operator+(const set& A, const set& B){
-    set *tmp = new set;
+    set tmp;
     for(int i = 0; i < A.size(); i++){
-            tmp->insert(A.mem_arr[i]);
+            tmp.insert(A.mem_arr[i]);
     }
     for(int i = 0; i < B.size(); i++){
-            tmp->insert(B.mem_arr[i]);
+            tmp.insert(B.mem_arr[i]);
     }
-    return *tmp;
+    return tmp;
 }
 
 set operator/(const set& A, const set& B){
-    set *tmp = new set;
+    set tmp ;
     for(int i = 0;i < A.size(); i++){
         if(!B.hasElement(A.mem_arr[i])){
-            tmp->insert(A.mem_arr[i]);
+            tmp.insert(A.mem_arr[i]);
         }
     }
-    return *tmp;
+    return tmp;
 }
 
 std::ostream& operator<<( std::ostream& os, const set& m_set){
