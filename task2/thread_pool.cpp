@@ -61,7 +61,7 @@ std::string xmpp_category_messenger::message(int ev) const{
     }
 };
 
-typedef void (*Task)();
+//typedef void (*Task)();
 
 void thread_work();
 
@@ -81,13 +81,13 @@ struct probability_calculator{
     private:
         funct _function;
 
-        //(void*)(test);
 };
 
 class thread_pool{
 public:
     thread_pool(int thread_num);
     ~thread_pool();
+    typedef std::function<void()> Task;
     template<typename T>
     void post(T handler);
     void run();
@@ -100,7 +100,6 @@ private:
     std::mutex _mutex;
     std::condition_variable cond_v;
     bool shut_down;
-    //std::thread_t th[_thread_num];
 };
 thread_pool::thread_pool(int thread_num){
     _thread_num = thread_num;
@@ -109,7 +108,6 @@ thread_pool::thread_pool(int thread_num){
 
         threadPool.emplace_back(std::thread(&thread_pool::run,this));
     }
-    //std::cout << "LOG::work has done" << std::endl;
 }
 
 void thread_pool::run(){
@@ -150,16 +148,18 @@ int main(){
     thread_pool th_p(7);
     std::string data;
     int i = 0;
-    while(i < 3){
-        int probability;
+    while(true){
+        int probability = 0;
         std::cin >> probability;
+        if (probability > 100)
+            continue;
          probability_calculator calculator([](const std::error_code &error){
              std::cout << error.message() << std::endl;
+
          });
         th_p.post((std::bind(calculator,probability)));
         i++;
     }
-    std::cout << "/* message */" << std::endl;
     return 0;
 }
 void thread_work(){
